@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "taugor-drive",
+    "slug": "taugor-drive",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
