@@ -1,14 +1,17 @@
 import { Button } from "@/components/Button";
 import { Text, View, Image } from "react-native";
 import { styles } from "./styles";
+import { useNavigation } from '@react-navigation/native';
 
 export default function Splash() {
+  const navigation = useNavigation();
+
   function handleClickSignIn() {
-    // router.navigate("/login/")
+    navigation.navigate('login');
   }
 
   function handleClickRegister() {
-    // router.navigate("/register/")
+    navigation.navigate('register');
   }
 
   return (

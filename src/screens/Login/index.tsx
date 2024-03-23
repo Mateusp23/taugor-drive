@@ -5,6 +5,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from "@/theme";
+import { useNavigation } from "@react-navigation/native";
 
 const GoogleIcon = () => {
   return (
@@ -13,6 +14,7 @@ const GoogleIcon = () => {
 };
 
 export default function Login() {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -66,7 +68,7 @@ export default function Login() {
       </View>
 
       <View style={styles.contentButton}>
-        {/* <Button title="Sign In" onPress={() => router.back()} /> */}
+        <Button title="Sign In" onPress={() => navigation.goBack()} />
         {/* <Button title="Sign In" onPress={handleLogin} /> */}
 
         <View style={styles.containerSeparator}>

@@ -1,10 +1,12 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 export default function Register() {
+  const navigation = useNavigation();
   const [name, setName] = useState('');
   const [businessName, setBusinessName] = useState('');
   const [phone, setPhone] = useState('');
@@ -70,7 +72,7 @@ export default function Register() {
       </View>
 
       <View style={styles.contentButton}>
-        <Button title="Sign In" onPress={() => {}} />
+        <Button title="Sign In" onPress={() => navigation.goBack()} />
       </View>
 
       <View style={styles.loginAccountContainer}>
