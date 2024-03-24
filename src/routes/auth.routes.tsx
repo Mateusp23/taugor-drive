@@ -1,3 +1,4 @@
+import Home from "@/screens/Home";
 import Login from "@/screens/Login";
 import Register from "@/screens/Register";
 import Splash from "@/screens/Splash";
@@ -11,6 +12,7 @@ export function AuthRoutes() {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="splash" component={Splash} />
       <Screen name="login" component={Login} />
+      <Screen name="home" component={Home} />
       <Screen name="register" component={Register} />
     </Navigator>
   );

@@ -68,7 +68,7 @@ export default function Login() {
       </View>
 
       <View style={styles.contentButton}>
-        <Button title="Sign In" onPress={() => navigation.goBack()} />
+        <Button title="Sign In" onPress={() => navigation.navigate('home')} />
         {/* <Button title="Sign In" onPress={handleLogin} /> */}
 
         <View style={styles.containerSeparator}>
@@ -79,14 +79,14 @@ export default function Login() {
       </View>
 
       <View style={styles.contentLoginGoogle}>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <GoogleIcon />
         </TouchableOpacity>
       </View>
 
       <View style={styles.registerAccountContainer}>
         <Text>Ainda não possui conta?</Text>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => navigation.navigate('register')}>
           <Text style={styles.registerAccount}>Cadastrar agora</Text>
         </TouchableOpacity>
       </View>

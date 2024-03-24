@@ -77,7 +77,7 @@ export default function Register() {
 
       <View style={styles.loginAccountContainer}>
         <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => navigation.navigate('login')}>
           <Text style={styles.loginAccount}>Login</Text>
         </TouchableOpacity>
       </View>
