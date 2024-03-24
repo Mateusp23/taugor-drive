@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "325325664858",
+    "project_id": "taugordrive-2b746",
+    "storage_bucket": "taugordrive-2b746.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325325664858:android:55f8adb1915576f3afde63",
+        "android_client_info": {
+          "package_name": "com.taugordrive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "325325664858-6r9sn46nt78pr5oq8j86dee9mtt0j1fa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.taugordrive",
+            "certificate_hash": "7f2c3a78ca244554e61dcc9b33873d789d100561"
+          }
+        },
+        {
+          "client_id": "325325664858-jvuvvnl4c5tuum6vseuv5k188u1frp54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyWAOSdHkLgTAil93YG7U4GHW3jAVurSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "325325664858-jvuvvnl4c5tuum6vseuv5k188u1frp54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
