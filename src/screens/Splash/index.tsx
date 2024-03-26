@@ -18,7 +18,7 @@ export default function Splash() {
     <View style={styles.container}>
       <Text style={styles.title}>Taugor Drive</Text>
 
-      <Image source={require('@/assets/team-colaborator.png')} style={styles.image} />
+      <Image source={require('@/assets/splash-image.png')} style={styles.image} />
 
       <View style={styles.containerButton}>
         <Button title="Entrar" onPress={handleClickSignIn} customStyle={styles.sigInBtn} />

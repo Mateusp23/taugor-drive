@@ -1,8 +1,11 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { auth } from "@/services/firebaseConfig";
+import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
 import { useNavigation } from "@react-navigation/native";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 export default function Register() {
@@ -12,25 +15,28 @@ export default function Register() {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputName = (value: string) => {
-    setName(value);
-  };
+  function handleCreateAccount() {
+    if (!email || !password || !name || !businessName || !phone) {
+      return Alert.alert("Criar", "Informe todos os campos");
+    }
 
-  const handleInputBusinessName = (value: string) => {
-    setBusinessName(value)
-  }
+    setIsLoading(true)
 
-  const handleInputPhone = (value: string) => {
-    setPhone(value)
-  }
-
-  const handleInputEmail = (value: string) => {
-    setEmail(value);
-  };
-
-  function handleInputPassword(value: string) {
-    setPassword(value)
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        const user = response.user;
+        console.log(user)
+        navigation.navigate('home');
+      })
+      .catch((error) => {
+        console.log(error)
+        displayErrorMessage('Criar', error.code);
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
@@ -43,36 +49,36 @@ export default function Register() {
           placeholder="Name"
           value={name}
           type="text"
-          onChangeText={handleInputName}
+          onChangeText={setName}
         />
         <Input
           placeholder="Business Name"
           value={businessName}
           type="text"
-          onChangeText={handleInputBusinessName}
+          onChangeText={setBusinessName}
         />
         <Input
           placeholder="Phone"
           value={phone}
           type="phone"
-          onChangeText={handleInputPhone}
+          onChangeText={setPhone}
         />
         <Input
           placeholder="E-mail"
           value={email}
           type="email"
-          onChangeText={handleInputEmail}
+          onChangeText={setEmail}
         />
         <Input
           placeholder="Password"
           value={password}
           type="password"
-          onChangeText={handleInputPassword}
+          onChangeText={setPassword}
         />
       </View>
 
       <View style={styles.contentButton}>
-        <Button title="Sign In" onPress={() => navigation.goBack()} />
+        <Button title="Register" isLoading={isLoading} onPress={handleCreateAccount} />
       </View>
 
       <View style={styles.loginAccountContainer}>

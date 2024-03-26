@@ -1,11 +1,13 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
+import { auth } from "@/services/firebaseConfig";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 
 const GoogleIcon = () => {
   return (
@@ -15,29 +17,30 @@ const GoogleIcon = () => {
 
 export default function Login() {
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleInputEmail = (value: string) => {
-    setEmail(value);
-  };
+  function handleLogin() {
+    if (!email || !password) {
+      return Alert.alert("Entrar", "Informe e-mail e senha");
+    }
 
-  function handleInputPassword(value: string) {
-    setPassword(value)
+    setIsLoading(true)
+
+    
   }
 
-  function handleLogin() {
-    // createUserWithEmailAndPassword(auth, email, password)
-    //   .then((userCredential) => {
-    //     const user = userCredential.user;
-    //     console.log(user)
-    //   })
-    //   .catch((error) => {
-    //     const errorCode = error.code;
-    //     const errorMessage = error.message;
+  function handleForgotPassword() {
+    if (!email) {
+      return Alert.alert("Recuperar senha", "Informe um e-mail");
+    }
 
-    //     console.log(errorMessage);
-    //   });
+    sendPasswordResetEmail(auth, email)
+      .then(() =>
+        Alert.alert("Redefinir senha", "Enviamos um e-mail para você")
+      )
+      .catch((error) => console.log(error));
   }
 
   return (
@@ -50,25 +53,25 @@ export default function Login() {
           placeholder="E-mail"
           value={email}
           type="email"
-          onChangeText={handleInputEmail}
+          onChangeText={setEmail}
         />
         <Input
           placeholder="Password"
           value={password}
           type="password"
-          onChangeText={handleInputPassword}
+          onChangeText={setPassword}
         />
       </View>
 
       <View style={styles.forgotPasswordContainer}>
         <Text>Esqueceu sua senha?</Text>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={handleForgotPassword}>
           <Text style={styles.forgotPasswordLink}>Clique aqui</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.contentButton}>
-        <Button title="Sign In" onPress={() => navigation.navigate('home')} />
+        <Button title="Sign In" isLoading={isLoading} onPress={handleLogin} />
         {/* <Button title="Sign In" onPress={handleLogin} /> */}
 
         <View style={styles.containerSeparator}>
