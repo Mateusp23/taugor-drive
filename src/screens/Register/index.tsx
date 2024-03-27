@@ -1,12 +1,21 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
-import { auth } from "@/services/firebaseConfig";
+import { auth, db } from "@/services/firebaseConfig";
 import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
+
+interface RegisterProps {
+  name: string
+  businessName: string
+  email: string
+  phone: string
+  password: string
+}
 
 export default function Register() {
   const navigation = useNavigation();
@@ -17,26 +26,32 @@ export default function Register() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleCreateAccount() {
+  async function handleCreateAccount() {
     if (!email || !password || !name || !businessName || !phone) {
       return Alert.alert("Criar", "Informe todos os campos");
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        const user = response.user;
-        console.log(user)
-        navigation.navigate('home');
-      })
-      .catch((error) => {
-        console.log(error)
-        displayErrorMessage('Criar', error.code);
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "users", user.uid), {
+        name: name,
+        businessName: businessName,
+        phone: phone,
+        email: email
+      });
+
+      Alert.alert("Conta", "Cadastrado com sucesso!");
+      navigation.navigate('home');
+    } catch (error: any) {
+      console.log(error)
+      displayErrorMessage('Criar', error.code);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
