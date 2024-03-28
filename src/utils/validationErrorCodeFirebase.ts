@@ -9,6 +9,7 @@ const errorMessages: ErrorMap = {
   'auth/email-already-in-use': 'E-mail informado já está em uso.',
   'auth/wrong-password': 'E-mail ou senha inválidos.',
   'auth/user-not-found': 'E-mail ou senha inválidos.',
+  'auth/invalid-credential': 'E-mail ou senha inválidos.',
 };
 
 export function displayErrorMessage(title: string, errorCode: string) {

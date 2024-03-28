@@ -7,7 +7,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { theme } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "@/services/firebaseConfig";
-import { createUserWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
 
 const GoogleIcon = () => {
   return (
@@ -21,14 +22,24 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleLogin() {
+  async function handleEmailLogin() {
     if (!email || !password) {
       return Alert.alert("Entrar", "Informe e-mail e senha");
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
 
-    
+    try {
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      console.log(response.user);
+
+      navigation.navigate('home');
+    } catch (error: any) {
+      console.error(error);
+      displayErrorMessage('Entrar', error.code);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleForgotPassword() {
@@ -71,7 +82,7 @@ export default function Login() {
       </View>
 
       <View style={styles.contentButton}>
-        <Button title="Sign In" isLoading={isLoading} onPress={handleLogin} />
+        <Button title="Sign In" isLoading={isLoading} onPress={handleEmailLogin} />
         {/* <Button title="Sign In" onPress={handleLogin} /> */}
 
         <View style={styles.containerSeparator}>
