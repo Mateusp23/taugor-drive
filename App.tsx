@@ -1,4 +1,5 @@
 import { Loading } from "@/components/Loading";
+import { UserProvider } from "@/context/UserContext";
 import { Routes } from "@/routes";
 import {
   Inter_400Regular,
@@ -20,8 +21,10 @@ export default function App() {
   });
 
   return (
-    <NavigationContainer>
-      {fontsLoaded ? <Routes /> : <Loading />}
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        {fontsLoaded ? <Routes /> : <Loading />}
+      </NavigationContainer>
+    </UserProvider>
   );
 }

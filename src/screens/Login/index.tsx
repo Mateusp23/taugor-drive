@@ -6,9 +6,11 @@ import { styles } from "./styles";
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from "@/theme";
 import { useNavigation } from "@react-navigation/native";
-import { auth } from "@/services/firebaseConfig";
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
+import { auth} from "@/services/firebaseConfig";
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
+import { useUser } from "@/context/UserContext";
+import getUserDetailsFromFirestore from "@/utils/getUsersDetailsFromFirestore";
 
 const GoogleIcon = () => {
   return (
@@ -21,18 +23,20 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUser } = useUser();
 
   async function handleEmailLogin() {
     if (!email || !password) {
       return Alert.alert("Entrar", "Informe e-mail e senha");
     }
-
     setIsLoading(true);
-
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response.user);
-
+      const userDetails = await getUserDetailsFromFirestore(response.user.uid);
+      if (userDetails) {
+        setUser(userDetails);
+      }
       navigation.navigate('home');
     } catch (error: any) {
       console.error(error);
