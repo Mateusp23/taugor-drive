@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.black,
     borderRadius: theme.borderRadius.sm,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingVertical: 12,
     marginBottom: 12,
   },
   input: {

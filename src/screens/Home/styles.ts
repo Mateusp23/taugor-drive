@@ -23,5 +23,8 @@ export const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 22,
     fontFamily: theme.fonts.family.regular,
+  },
+  uploadBtn: {
+    marginBottom: 12,
   }
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, FlatList, Text, View } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@/components/Button';
@@ -8,6 +8,8 @@ import { InputSearch } from '@/components/InputSearch';
 import { styles } from './styles';
 import { theme } from '@/theme';
 import { auth } from '@/services/firebaseConfig';
+import { ImageThumbnail } from '@/components/ImageThumbnail';
+import { Separator } from '@/components/Separator';
 
 export default function Home() {
   const navigation = useNavigation();
@@ -47,6 +49,20 @@ export default function Home() {
     confirmLogout();
   }
 
+  const userImages = [
+    { name: 'Mateus.jpg', url: 'https://github.com/Mateusp23.png' },
+    { name: 'Mateus2.jpg', url: 'https://github.com/Mateusp23.png' },
+    { name: 'Mateus2.jpg', url: 'https://github.com/Mateusp23.png' },
+    { name: 'Mateus2.jpg', url: 'https://github.com/Mateusp23.png' },
+    { name: 'Mateus2.jpg', url: 'https://github.com/Mateusp23.png' },
+    { name: 'Mateus2.jpg', url: 'https://github.com/Mateusp23.png' },
+    // Adicione mais imagens mocadas conforme necessário
+  ];
+
+  const RenderSeparator = () => {
+    return <Separator />
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -56,9 +72,16 @@ export default function Home() {
       <Text style={styles.subtitle}>Seja bem vindo!! Faça upload de arquivos e pesquise-os.</Text>
 
       <View>
+        <Button title="Upload" onPress={() => navigation.navigate('upload')} customStyle={styles.uploadBtn} />
         <InputSearch placeholder="Pesquisar ..." />
-        <Button title="Upload" onPress={() => navigation.navigate('upload')} />
       </View>
+
+      <FlatList
+        data={userImages}
+        ItemSeparatorComponent={RenderSeparator}
+        renderItem={({ item }) => <ImageThumbnail image={item} />}
+        keyExtractor={(item, index) => `${item.name}-${index}`}
+      />
     </View>
   );
 }
