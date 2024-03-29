@@ -21,6 +21,14 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const { setUser } = useUser();
 
+  const clearFields = () => {
+    setName('')
+    setBusinessName('')
+    setPhone('')
+    setEmail('');
+    setPassword('');
+  };
+
   async function handleCreateAccount() {
     if (!email || !password || !name || !businessName || !phone) {
       return Alert.alert("Criar", "Informe todos os campos");
@@ -52,6 +60,7 @@ export default function Register() {
       console.error(error);
       displayErrorMessage('Criar', error.code);
     } finally {
+      clearFields()
       setIsLoading(false);
     }
   }

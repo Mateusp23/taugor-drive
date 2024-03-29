@@ -7,10 +7,15 @@ export const styles = StyleSheet.create({
     padding: 18,
     backgroundColor: theme.colors.background,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 48,
+  },
   title: {
     fontSize: theme.fonts.size.heading.md,
     lineHeight: 44,
-    marginTop: 64,
     fontFamily: theme.fonts.family.bold,
   },
   subtitle: {

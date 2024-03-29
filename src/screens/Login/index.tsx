@@ -25,6 +25,11 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const { setUser } = useUser();
 
+  const clearFields = () => {
+    setEmail(''); 
+    setPassword('');
+  };
+
   async function handleEmailLogin() {
     if (!email || !password) {
       return Alert.alert("Entrar", "Informe e-mail e senha");
@@ -32,7 +37,6 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response.user);
       const userDetails = await getUserDetailsFromFirestore(response.user.uid);
       if (userDetails) {
         setUser(userDetails);
@@ -42,6 +46,7 @@ export default function Login() {
       console.error(error);
       displayErrorMessage('Entrar', error.code);
     } finally {
+      clearFields()
       setIsLoading(false);
     }
   }
@@ -87,7 +92,6 @@ export default function Login() {
 
       <View style={styles.contentButton}>
         <Button title="Sign In" isLoading={isLoading} onPress={handleEmailLogin} />
-        {/* <Button title="Sign In" onPress={handleLogin} /> */}
 
         <View style={styles.containerSeparator}>
           <View style={styles.separator} />

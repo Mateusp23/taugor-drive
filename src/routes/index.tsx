@@ -5,7 +5,8 @@ import { AuthRoutes } from "./auth.routes";
 
 export function Routes() {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(false);
+  const [user] = useState(false);
+  //const { user } = useUser()
 
   if (loading) {
     return <Loading />;

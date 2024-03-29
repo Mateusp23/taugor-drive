@@ -10,11 +10,13 @@ export interface User {
 interface UserContextType {
   user: User | null
   setUser: (user: User | null) => void
+  clearUser: () => void
 }
 
 const UserContext = createContext<UserContextType>({
   user: null,
-  setUser: () => { }
+  setUser: () => { },
+  clearUser: () => { },
 });
 
 export function useUser() {
@@ -24,8 +26,12 @@ export function useUser() {
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
+  const clearUser = () => {
+    setUser(null);
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, clearUser }}>
       {children}
     </UserContext.Provider>
   );
