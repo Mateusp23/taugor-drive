@@ -5,11 +5,16 @@ import { styles } from './styles';
 import { Feather } from '@expo/vector-icons';
 import { theme } from '@/theme';
 import { useState } from 'react';
-import { Input } from '@/components/Input';
+import { FileUpload } from '@/components/FileUpload';
 
 export default function Upload() {
   const navigation = useNavigation();
+  const [fileUri, setFileUri] = useState<string | null>(null);
   const [fileName, setFileName] = useState('');
+
+  const handleFileChange = (uri: string | null) => {
+    setFileUri(uri); // Define a URI do arquivo selecionado
+  };
 
   return (
     <View style={styles.container}>
@@ -18,13 +23,9 @@ export default function Upload() {
         <Text style={styles.title}>Upload</Text>
       </View>
       <Text style={styles.subtitle}>Faça o upload de arquivos.</Text>
-      <Input
-        placeholder="Nome do arquivo"
-        value={fileName}
-        type="text"
-        onChangeText={setFileName}
-      />
 
+      <FileUpload onFileChange={handleFileChange} />
+      
       <View>
         <Button title="Enviar" onPress={() => navigation.goBack()} />
       </View>
