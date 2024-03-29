@@ -57,7 +57,7 @@ export default function Home() {
 
       <View>
         <InputSearch placeholder="Pesquisar ..." />
-        <Button title="Sign In" onPress={() => navigation.goBack()} />
+        <Button title="Upload" onPress={() => navigation.navigate('upload')} />
       </View>
     </View>
   );

@@ -6,6 +6,7 @@ export declare global {
       register: undefined;
       loading: undefined;
       home: undefined;
+      upload: undefined;
     }
   }
 }
