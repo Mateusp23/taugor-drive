@@ -7,8 +7,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 300,
-    height: 300,
+    width: 340,
+    height: 340,
     borderRadius: theme.borderRadius.sm,
     marginBottom: 12,
   },
