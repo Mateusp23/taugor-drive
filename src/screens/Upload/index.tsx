@@ -13,7 +13,7 @@ export default function Upload() {
   const [fileName, setFileName] = useState('');
 
   const handleFileChange = (uri: string | null) => {
-    setFileUri(uri); // Define a URI do arquivo selecionado
+    setFileUri(uri); 
   };
 
   return (
@@ -24,7 +24,7 @@ export default function Upload() {
       </View>
       <Text style={styles.subtitle}>Faça o upload de arquivos.</Text>
 
-      <FileUpload onFileChange={handleFileChange} />
+      <FileUpload onFileChange={handleFileChange} fileName={fileName} setFileName={setFileName} />
       
       <View>
         <Button title="Enviar" onPress={() => navigation.goBack()} />

@@ -5,11 +5,12 @@ import { styles } from './styles';
 import { Input } from '../Input';
 
 interface FileUploadProps {
-  onFileChange: (file: string | null) => void;
+  onFileChange: (file: string | null) => void
+  fileName: string
+  setFileName: (text: string) => void
 }
 
-export function FileUpload({ onFileChange }: FileUploadProps) {
-  const [fileName, setFileName] = useState<string>('');
+export function FileUpload({ onFileChange, fileName, setFileName }: FileUploadProps) {
   const [file, setFile] = useState<string | null>(null)
 
   const handleFileSelect = async () => {
