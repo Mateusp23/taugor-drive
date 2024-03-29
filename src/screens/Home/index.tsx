@@ -13,32 +13,38 @@ export default function Home() {
   const navigation = useNavigation();
   const { user, clearUser } = useUser();
 
-  function handleLogout() {
+  function performLogout() {
+    auth.signOut()
+      .then(() => {
+        clearUser();
+        navigation.navigate('login');
+      })
+      .catch((error) => {
+        console.error('Erro ao fazer logout:', error);
+      });
+  };
+
+  function confirmLogout() {
     Alert.alert(
       'Confirmar logout',
       'Tem certeza de que deseja fazer logout?',
       [
         {
           text: 'Cancelar',
-          onPress: () => console.log('Logout cancelado'),
+          onPress: () => { return },
           style: 'cancel',
         },
         {
           text: 'Confirmar',
-          onPress: () => {
-            auth.signOut()
-              .then(() => {
-                clearUser();
-                navigation.navigate('login');
-              })
-              .catch((error) => {
-                console.error('Erro ao fazer logout:', error);
-              });
-          },
+          onPress: performLogout,
         },
       ],
       { cancelable: false }
     );
+  };
+
+  function handleLogout() {
+    confirmLogout();
   }
 
   return (
