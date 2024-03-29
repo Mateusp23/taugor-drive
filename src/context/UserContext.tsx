@@ -5,6 +5,7 @@ export interface User {
   businessName: string
   phone: string
   email: string
+  uid?: string
 }
 
 interface UserContextType {

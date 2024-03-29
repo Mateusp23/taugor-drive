@@ -51,7 +51,8 @@ export default function Register() {
         name: name,
         businessName: businessName,
         phone: phone,
-        email: email
+        email: email,
+        uid: user.uid
       });
 
       Alert.alert("Conta", "Cadastrado com sucesso!");

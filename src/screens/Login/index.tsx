@@ -37,16 +37,20 @@ export default function Login() {
     setIsLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      const userDetails = await getUserDetailsFromFirestore(response.user.uid);
+      const userUid = response.user.uid;
+      const userDetails = await getUserDetailsFromFirestore(userUid);
+
       if (userDetails) {
+        userDetails.uid = userUid;
         setUser(userDetails);
       }
+
       navigation.navigate('home');
     } catch (error: any) {
       console.error(error);
       displayErrorMessage('Entrar', error.code);
     } finally {
-      clearFields()
+      clearFields();
       setIsLoading(false);
     }
   }
