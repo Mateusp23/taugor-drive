@@ -11,9 +11,12 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Bem vindo(a) { user?.name }</Text>
+      <Text style={styles.title}>Olá {user?.name}</Text>
+      <Text style={styles.subtitle}>Seja bem vindo!! Faça upload de arquivos e pesquise-os.</Text>
 
-      <Button title="Sign In" onPress={() => navigation.goBack()} />
+      <View>
+        <Button title="Sign In" onPress={() => navigation.goBack()} />
+      </View>
     </View>
   )
 }

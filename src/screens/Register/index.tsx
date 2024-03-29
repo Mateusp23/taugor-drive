@@ -1,21 +1,15 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { useUser } from "@/context/UserContext";
+import { createUserDocument } from "@/services/createUserFromFirebase";
 import { auth, db } from "@/services/firebaseConfig";
+import getUserDetailsFromFirestore from "@/services/getUsersDetailsFromFirestore";
 import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
 import { useNavigation } from "@react-navigation/native";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
-
-interface RegisterProps {
-  name: string
-  businessName: string
-  email: string
-  phone: string
-  password: string
-}
 
 export default function Register() {
   const navigation = useNavigation();
@@ -25,6 +19,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useUser();
 
   async function handleCreateAccount() {
     if (!email || !password || !name || !businessName || !phone) {
@@ -37,7 +32,14 @@ export default function Register() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      await setDoc(doc(db, "users", user.uid), {
+      await createUserDocument(user.uid, {
+        name: name,
+        businessName: businessName,
+        phone: phone,
+        email: email
+      });
+
+      setUser({
         name: name,
         businessName: businessName,
         phone: phone,
@@ -47,7 +49,7 @@ export default function Register() {
       Alert.alert("Conta", "Cadastrado com sucesso!");
       navigation.navigate('home');
     } catch (error: any) {
-      console.log(error)
+      console.error(error);
       displayErrorMessage('Criar', error.code);
     } finally {
       setIsLoading(false);

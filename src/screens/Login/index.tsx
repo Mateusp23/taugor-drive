@@ -10,7 +10,7 @@ import { auth} from "@/services/firebaseConfig";
 import { sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { displayErrorMessage } from "@/utils/validationErrorCodeFirebase";
 import { useUser } from "@/context/UserContext";
-import getUserDetailsFromFirestore from "@/utils/getUsersDetailsFromFirestore";
+import getUserDetailsFromFirestore from "@/services/getUsersDetailsFromFirestore";
 
 const GoogleIcon = () => {
   return (

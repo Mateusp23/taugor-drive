@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from 'react';
 
 export interface User {
   name: string
-  nameBusiness: string
+  businessName: string
   phone: string
   email: string
 }
