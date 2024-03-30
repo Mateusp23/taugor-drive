@@ -1,4 +1,5 @@
 import { Loading } from "@/components/Loading";
+import { ImageProvider } from "@/context/ImageContext";
 import { UserProvider } from "@/context/UserContext";
 import { Routes } from "@/routes";
 import { theme } from "@/theme";
@@ -25,7 +26,9 @@ export default function App() {
     <NavigationContainer>
       <StatusBar backgroundColor={theme.colors.white} barStyle='dark-content' />
       <UserProvider>
-        {fontsLoaded ? <Routes /> : <Loading />}
+        <ImageProvider>
+          {fontsLoaded ? <Routes /> : <Loading />}
+        </ImageProvider>
       </UserProvider>
     </NavigationContainer>
   );
