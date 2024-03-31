@@ -6,10 +6,13 @@ import { useImageContext } from '@/context/ImageContext';
 import { ref, getDownloadURL, uploadBytes } from 'firebase/storage';
 import { storage } from '@/services/firebaseConfig';
 import { Button } from '../Button';
+import { useNavigation } from '@react-navigation/native';
 
 export function FileUpload() {
   const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
   const [image, setImage] = useState<string | undefined | null>(null);
+  const [imageUpload, setImageUpload] = useState<string>('');
   const { setImageUri } = useImageContext(); // Obtém a função do contexto global
 
   const pickImage = async () => {
@@ -30,13 +33,13 @@ export function FileUpload() {
     });
 
     if (!result.canceled) {
-      const uploadUrl = await uploadImageAsync(result.assets[0].uri)
+      const uploadUrl = result.assets[0].uri
+      setImageUpload(uploadUrl)
       setImage(uploadUrl);
     }
   };
 
   const uploadImageAsync = async (uri: string) => {
-    setIsLoading(true)
     const blob: any = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -59,25 +62,22 @@ export function FileUpload() {
       return await getDownloadURL(storageRef)
     } catch (error) {
       console.error(error)
-    } finally {
-      setIsLoading(false)
     }
   }
 
   const handleUpload = async () => {
-    // if (!image) {
-    //   Alert.alert('Erro', 'Selecione uma imagem para enviar');
-    //   return;
-    // }
-
-    // setIsLoading(true);
-    // try {
-    //   setIsLoading(false);
-    // } catch (error) {
-    //   console.error('Erro ao fazer upload:', error);
-    //   Alert.alert('Erro', 'Ocorreu um erro ao fazer upload do arquivo');
-    //   setIsLoading(false);
-    // }
+    if (!imageUpload) {
+      return console.log("image empty")
+    }
+    setIsLoading(true)
+    try {
+      await uploadImageAsync(imageUpload)
+      navigation.navigate('home')
+    } catch (error: any) {
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
   };
 
   const handleRemoveImage = () => {
